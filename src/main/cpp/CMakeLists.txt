@@ -74,6 +74,8 @@ include_directories(${JNI_INCLUDE_DIRS})
 # locally. Otherwise the PROJ version installed by the package manager may have precedence on Linux systems.
 # CMake searches the path in the desired order when using this directive.
 find_library(PROJLIB proj)
+set (PROJLIB ../../src/main/proj/proj)
+set (PROJINC ../proj/include)
 
 # GCC options reminder:
 #    -fPIC		Generate position-independent code suitable for use in a shared library.

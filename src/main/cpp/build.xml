@@ -19,7 +19,7 @@
     <available property="cmake.configured" file="${cmake.subdir}/Makefile"/>
     <available property="projjni.compiled" file="classes/org/osgeo/proj/libproj-binding.so"/>
     <available property="projjni.compiled" file="classes/org/osgeo/proj/libproj-binding.dylib"/>
-    <available property="projjni.compiled" file="classes/org/osgeo/proj/proj-binding.dll"/>
+    <!--available property="projjni.compiled" file="classes/org/osgeo/proj/proj-binding.dll"/-->
   </target>
   <!--
     All CMake configuration files will be stored in the `target/cmake` directory.
@@ -30,7 +30,7 @@
   <target name="configure" depends="init" unless="cmake.configured">
     <mkdir dir="${cmake.subdir}"/>
     <exec executable="cmake" dir="${cmake.subdir}" failonerror="true">
-      <arg line="${source.directory}"/>
+      <arg line="${source.directory} -A x64"/>
     </exec>
   </target>
   <!--
@@ -40,7 +40,7 @@
   -->
   <target name="build" depends="configure" unless="projjni.compiled">
     <exec executable="cmake" failonerror="true">
-      <arg line="--build ${cmake.subdir}"/>
+      <arg line="--build ${cmake.subdir} --config Release"/>
     </exec>
     <!--
       At this point the native file (".so" or ".dll") has been written in "classes/org/…/proj/" directory.
@@ -48,10 +48,9 @@
       task creates a symbolic link to it in the "target" directory for convenience.
     -->
     <first id="native-binary">
-      <fileset dir="classes/org/osgeo/proj" includes="*-binding.*"/>
+      <fileset dir="${cmake.subdir}" includes="**/*-binding.*"/>
     </first>
     <basename property="native-binary-filename" file="${toString:native-binary}"/>
-    <symlink overwrite="true" resource="${toString:native-binary}"
-             link="${basedir}/${native-binary-filename}"/>
+  	<copy file="${toString:native-binary}" todir="${basedir}/classes/org/osgeo/proj"/>
   </target>
 </project>

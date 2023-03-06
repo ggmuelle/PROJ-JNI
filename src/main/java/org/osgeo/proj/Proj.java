@@ -77,8 +77,8 @@ public final class Proj {
      * @return the PROJ release string, or an empty value if the native library is not found.
      */
     public static Optional<String> version() {
-        final Level level;
-        final LinkageError error;
+        Level level;
+        LinkageError error;
         try {
             return Optional.of(NativeResource.version());
         } catch (UnsatisfiedLinkError | NoSuchFieldError e) {

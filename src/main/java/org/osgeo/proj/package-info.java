@@ -32,7 +32,7 @@
  * Note that geographic coordinates are in <var>latitude</var>, <var>longitude</var> order,
  * as specified in the EPSG database and in agreement with centuries of practice.</p>
  *
- * <blockquote><pre>
+ * {@snippet lang="java" :
  * CRSAuthorityFactory        factory   = Proj.getAuthorityFactory("EPSG");
  * CoordinateOperationFactory regops    = Proj.getOperationFactory(null);
  * CoordinateReferenceSystem  sourceCRS = factory.createCoordinateReferenceSystem("4326");   // WGS 84
@@ -52,8 +52,8 @@
  * System.out.printf("Montreal:  %11.1f %11.1f%n", coordinates[0], coordinates[1]);
  * System.out.printf("Vancouver: %11.1f %11.1f%n", coordinates[2], coordinates[3]);
  * System.out.printf("Tokyo:     %11.1f %11.1f%n", coordinates[4], coordinates[5]);
- * System.out.printf("Paris:     %11.1f %11.1f%n", coordinates[6], coordinates[7]);</pre>
- * </blockquote>
+ * System.out.printf("Paris:     %11.1f %11.1f%n", coordinates[6], coordinates[7]);
+ * }
  *
  * <h2>Performance considerations</h2>
  * <p>Calls to {@code createCoordinateOperation(…)} methods may be costly.
@@ -95,6 +95,14 @@
  * The {@code "%s"} flag formats the object name, while the alternative form {@code "%#s"}
  * formats the authority (typically EPSG) code.</p>
  *
+ * <h2>Configuration</h2>
+ * <p>The "{@systemProperty org.osgeo.proj.data}" system property can be set for specifying the location
+ * of PROJ resource files, such as the {@code proj.db} database and the datum shift grid files.
+ * Multiple directories can be specified in the string with platform-specific path separator
+ * ({@code ':'} on Unix and {@code ';'} on Windows).
+ * If this property is not set, then the value specified by the {@code PROJ_DATA} environment variable is used.
+ * If that environment variable is not set neither, then a PROJ hard-coded default path is used.</p>
+ *
  * <h2>Unsupported features</h2>
  * <p>The following method calls will cause an exception to be thrown:</p>
  * <ul>
@@ -110,7 +118,7 @@
  * </ul>
  *
  * @author  Martin Desruisseaux (Geomatys)
- * @version 2.0
+ * @version 2.1
  * @since   1.0
  */
 package org.osgeo.proj;

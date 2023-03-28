@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 #undef org_osgeo_proj_Context_TIMEOUT
-#define org_osgeo_proj_Context_TIMEOUT 60000000000LL
+#define org_osgeo_proj_Context_TIMEOUT 60000000000i64
 /*
  * Class:     org_osgeo_proj_Context
  * Method:    create
